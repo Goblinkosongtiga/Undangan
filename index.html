@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Undangan Wisuda Digital 2030</title>
+
+<!-- Leaflet CSS untuk peta -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -49,7 +53,6 @@
     to { opacity: 1; transform: translateY(0) scale(1); }
   }
 
-  /* Efek kilau berjalan di border card */
   .card::before {
     content: '';
     position: absolute;
@@ -59,48 +62,38 @@
     animation: shine 6s linear infinite;
     pointer-events: none;
   }
-  @keyframes shine {
-    to { transform: rotate(360deg); }
-  }
+  @keyframes shine { to { transform: rotate(360deg); } }
 
   .card > * { position: relative; z-index: 2; }
 
   /* ===== FOTO ===== */
   .photo-wrap {
-    width: 150px;
-    height: 150px;
+    width: 150px; height: 150px;
     margin: 0 auto 25px;
     position: relative;
     animation: floatPhoto 4s ease-in-out infinite;
   }
-
   @keyframes floatPhoto {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-10px); }
   }
-
   .photo-ring {
-    position: absolute;
-    inset: -6px;
+    position: absolute; inset: -6px;
     border-radius: 50%;
     background: conic-gradient(#ff6ec4, #7873f5, #4ADEDE, #ff6ec4);
     animation: spinRing 4s linear infinite;
     filter: blur(2px);
   }
   @keyframes spinRing { to { transform: rotate(360deg); } }
-
   .photo {
-    position: absolute;
-    inset: 0;
+    position: absolute; inset: 0;
     border-radius: 50%;
     overflow: hidden;
     border: 4px solid rgba(255,255,255,0.9);
     box-shadow: 0 10px 30px rgba(0,0,0,0.4);
   }
-
   .photo img {
-    width: 100%;
-    height: 100%;
+    width: 100%; height: 100%;
     object-fit: cover;
     animation: photoZoom 8s ease-in-out infinite alternate;
   }
@@ -118,7 +111,6 @@
     margin-bottom: 10px;
     animation: fadeUp 1s 0.3s backwards;
   }
-
   .title {
     font-size: 1.9rem;
     font-weight: 800;
@@ -131,9 +123,7 @@
     animation: textFlow 5s linear infinite, fadeUp 1s 0.5s backwards;
     margin-bottom: 6px;
   }
-  @keyframes textFlow {
-    to { background-position: 300% 0; }
-  }
+  @keyframes textFlow { to { background-position: 300% 0; } }
 
   .year {
     font-size: 3.2rem;
@@ -150,8 +140,7 @@
   }
 
   .divider {
-    width: 60px;
-    height: 3px;
+    width: 60px; height: 3px;
     margin: 18px auto;
     border-radius: 3px;
     background: linear-gradient(90deg, transparent, #4ADEDE, #ff6ec4, transparent);
@@ -164,7 +153,6 @@
     color: #ffffff;
     animation: fadeUp 1s 1.1s backwards;
   }
-
   .nim {
     font-size: 0.85rem;
     color: #b8c0ff;
@@ -189,7 +177,6 @@
     margin: 22px 0;
     animation: fadeUp 1s 1.5s backwards;
   }
-
   .detail-item {
     display: flex;
     align-items: center;
@@ -205,19 +192,16 @@
     transform: translateX(5px);
     background: rgba(255,255,255,0.13);
   }
-
   .detail-item .icon {
     font-size: 1.3rem;
     animation: bounce 2s ease-in-out infinite;
   }
   .detail-item:nth-child(2) .icon { animation-delay: 0.3s; }
   .detail-item:nth-child(3) .icon { animation-delay: 0.6s; }
-
   @keyframes bounce {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-4px); }
   }
-
   .detail-item .label {
     font-size: 0.7rem;
     text-transform: uppercase;
@@ -230,7 +214,109 @@
     color: #fff;
   }
 
-  /* ===== BUTTON ===== */
+  /* ===== PETA ===== */
+  .map-section {
+    margin: 20px 0 10px;
+    animation: fadeUp 1s 1.6s backwards;
+  }
+  .map-title {
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #a8b3ff;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .map-title::before,
+  .map-title::after {
+    content: '';
+    flex: 1;
+    max-width: 40px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #7873f5);
+  }
+  .map-title::after {
+    background: linear-gradient(90deg, #7873f5, transparent);
+  }
+
+  #map {
+    width: 100%;
+    height: 220px;
+    border-radius: 18px;
+    border: 1px solid rgba(255,255,255,0.25);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    overflow: hidden;
+    /* Leaflet default z-index terlalu tinggi, kita batasi */
+    z-index: 1;
+  }
+
+  /* Sembunyikan atribusi default agar rapi (opsional, tetap ada di tooltip) */
+  .leaflet-control-attribution {
+    font-size: 9px !important;
+    background: rgba(0,0,0,0.4) !important;
+    color: #ccc !important;
+  }
+  .leaflet-control-attribution a { color: #9bb !important; }
+
+  /* Custom marker pin */
+  .custom-pin {
+    width: 26px; height: 26px;
+    background: linear-gradient(135deg, #ff6ec4, #7873f5);
+    border: 3px solid #fff;
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    box-shadow: 0 0 15px rgba(255,110,196,0.8);
+    animation: pinPulse 1.5s ease-in-out infinite;
+  }
+  @keyframes pinPulse {
+    0%, 100% { box-shadow: 0 0 15px rgba(255,110,196,0.8); }
+    50% { box-shadow: 0 0 30px rgba(74,222,222,1); }
+  }
+
+  .map-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+    animation: fadeUp 1s 1.7s backwards;
+  }
+  .map-actions a {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 11px 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+  .btn-gmaps {
+    color: #fff;
+    background: linear-gradient(135deg, #34a853, #1a73e8);
+    box-shadow: 0 6px 20px rgba(26,115,232,0.4);
+  }
+  .btn-gmaps:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(52,168,83,0.6);
+  }
+  .btn-zoom {
+    color: #fff;
+    background: linear-gradient(135deg, #ff6ec4, #7873f5);
+    box-shadow: 0 6px 20px rgba(120,115,245,0.4);
+    border: none;
+    cursor: pointer;
+  }
+  .btn-zoom:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(255,110,196,0.6);
+  }
+
+  /* ===== BUTTON UTAMA ===== */
   .btn {
     display: inline-block;
     margin-top: 10px;
@@ -246,7 +332,7 @@
     background-size: 200% 100%;
     box-shadow: 0 10px 30px rgba(120,115,245,0.5);
     transition: all 0.3s ease;
-    animation: fadeUp 1s 1.7s backwards, btnGlow 3s ease-in-out infinite;
+    animation: fadeUp 1s 1.9s backwards, btnGlow 3s ease-in-out infinite;
     text-decoration: none;
   }
   .btn:hover {
@@ -268,8 +354,7 @@
   .confetti {
     position: fixed;
     top: -10px;
-    width: 10px;
-    height: 10px;
+    width: 10px; height: 10px;
     opacity: 0.9;
     z-index: 1;
     pointer-events: none;
@@ -279,7 +364,7 @@
     to { transform: translateY(105vh) rotate(720deg); }
   }
 
-  /* Ornamen lingkaran cahaya */
+  /* Ornamen orb */
   .orb {
     position: fixed;
     border-radius: 50%;
@@ -291,7 +376,6 @@
   .orb1 { width: 300px; height: 300px; background: #6a11cb; top: -80px; left: -80px; animation: drift 12s ease-in-out infinite; }
   .orb2 { width: 250px; height: 250px; background: #2575fc; bottom: -60px; right: -60px; animation: drift 15s ease-in-out infinite reverse; }
   .orb3 { width: 200px; height: 200px; background: #ff6ec4; top: 40%; right: -100px; animation: drift 18s ease-in-out infinite; }
-
   @keyframes drift {
     0%, 100% { transform: translate(0, 0) scale(1); }
     50% { transform: translate(40px, -40px) scale(1.2); }
@@ -301,22 +385,20 @@
     .title { font-size: 1.5rem; }
     .year { font-size: 2.5rem; }
     .card { padding: 30px 20px; }
+    #map { height: 190px; }
   }
 </style>
 </head>
 <body>
 
-<!-- Ornamen cahaya -->
 <div class="orb orb1"></div>
 <div class="orb orb2"></div>
 <div class="orb orb3"></div>
 
-<!-- Kartu Undangan -->
 <div class="card">
   <div class="photo-wrap">
     <div class="photo-ring"></div>
     <div class="photo">
-      <!-- Ganti src dengan foto wisudawan/wisudawati -->
       <img src="https://images.unsplash.com/photo-1627556704302-624286467c65?w=400&q=80" alt="Foto Wisudawan">
     </div>
   </div>
@@ -359,13 +441,87 @@
     </div>
   </div>
 
+  <!-- ===== PETA LOKASI ===== -->
+  <div class="map-section">
+    <div class="map-title">Lokasi Acara</div>
+    <div id="map"></div>
+    <div class="map-actions">
+      <a id="gmapsLink" class="btn-gmaps" href="#" target="_blank" rel="noopener">
+        🗺️ Google Maps
+      </a>
+      <button class="btn-zoom" onclick="focusMap()">
+        🎯 Lihat Detail
+      </button>
+    </div>
+  </div>
+
   <a href="#" class="btn" onclick="alert('Terima kasih! Sampai jumpa di hari wisuda 🎓✨'); return false;">
     Konfirmasi Kehadiran
   </a>
 </div>
 
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
 <script>
-  // ===== Konfeti jatuh =====
+  /* ====== KONFIGURASI LOKASI ======
+     Ganti latitude & longitude sesuai lokasi acara Anda.
+     Contoh di sini: Monas, Jakarta (-6.175392, 106.827153)
+  */
+  const LOKASI = {
+    lat: -6.175392,
+    lng: 106.827153,
+    nama: "Auditorium Universitas Nusantara",
+    alamat: "Jl. Contoh No. 123, Jakarta Pusat"
+  };
+
+  // Inisialisasi peta
+  const map = L.map('map', {
+    scrollWheelZoom: false,   // hindari zoom tak sengaja saat scroll halaman
+    zoomControl: true,
+    attributionControl: true
+  }).setView([LOKASI.lat, LOKASI.lng], 16);
+
+  // Tile layer OpenStreetMap (gratis)
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; OpenStreetMap'
+  }).addTo(map);
+
+  // Marker custom (pin gradasi)
+  const pinIcon = L.divIcon({
+    className: '',
+    html: '<div class="custom-pin"></div>',
+    iconSize: [26, 26],
+    iconAnchor: [13, 26],
+    popupAnchor: [0, -26]
+  });
+
+  const marker = L.marker([LOKASI.lat, LOKASI.lng], { icon: pinIcon }).addTo(map);
+
+  marker.bindPopup(
+    `<strong>${LOKASI.nama}</strong><br>
+     <span style="font-size:12px;color:#666;">${LOKASI.alamat}</span><br>
+     <a href="https://www.google.com/maps?q=${LOKASI.lat},${LOKASI.lng}" target="_blank">
+       Buka di Google Maps →
+     </a>`
+  ).openPopup();
+
+  // Tombol Google Maps
+  document.getElementById('gmapsLink').href =
+    `https://www.google.com/maps/dir/?api=1&destination=${LOKASI.lat},${LOKASI.lng}`;
+
+  // Fungsi zoom ke lokasi
+  function focusMap() {
+    map.flyTo([LOKASI.lat, LOKASI.lng], 18, { duration: 1.2 });
+    marker.openPopup();
+  }
+
+  // Aktifkan scroll zoom hanya saat peta diklik
+  map.on('click', () => map.scrollWheelZoom.enable());
+  map.on('mouseout', () => map.scrollWheelZoom.disable());
+
+  /* ====== KONFETI ====== */
   const colors = ['#ff6ec4', '#7873f5', '#4ADEDE', '#ffd93d', '#ffffff', '#ff8fab'];
   function createConfetti() {
     const c = document.createElement('div');
@@ -383,16 +539,18 @@
   }
   setInterval(createConfetti, 250);
 
-  // ===== Efek parallax ringan pada kartu =====
+  /* ====== PARALLAX RINGAN (hanya desktop) ====== */
   const card = document.querySelector('.card');
-  document.addEventListener('mousemove', (e) => {
-    const x = (e.clientX / window.innerWidth - 0.5) * 8;
-    const y = (e.clientY / window.innerHeight - 0.5) * 8;
-    card.style.transform = `perspective(1000px) rotateY(${x}deg) rotateX(${-y}deg)`;
-  });
-  document.addEventListener('mouseleave', () => {
-    card.style.transform = 'perspective(1000px) rotateY(0) rotateX(0)';
-  });
+  if (window.matchMedia('(pointer: fine)').matches) {
+    document.addEventListener('mousemove', (e) => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 8;
+      const y = (e.clientY / window.innerHeight - 0.5) * 8;
+      card.style.transform = `perspective(1000px) rotateY(${x}deg) rotateX(${-y}deg)`;
+    });
+    document.addEventListener('mouseleave', () => {
+      card.style.transform = 'perspective(1000px) rotateY(0) rotateX(0)';
+    });
+  }
 </script>
 
 </body>
