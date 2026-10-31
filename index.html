@@ -3,9 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Undangan Wisuda Digital 2030</title>
+<title>Undangan Wisuda — Mohidin Tuasikal</title>
 
-<!-- Leaflet CSS untuk peta -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
 <style>
@@ -17,9 +16,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #6a11cb, #2575fc);
+    background: linear-gradient(-45deg, #1a0b2e, #3d1e6d, #1e3a8a, #6a11cb, #2575fc);
     background-size: 400% 400%;
-    animation: gradientBG 15s ease infinite;
+    animation: gradientBG 18s ease infinite;
     overflow-x: hidden;
     padding: 20px;
   }
@@ -33,19 +32,19 @@
   .card {
     position: relative;
     width: 100%;
-    max-width: 480px;
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 30px;
-    padding: 40px 30px;
+    max-width: 500px;
+    background: rgba(255, 255, 255, 0.09);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 32px;
+    padding: 45px 32px 40px;
     text-align: center;
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5),
-                0 0 80px rgba(106, 17, 203, 0.3);
-    animation: cardIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.55),
+                0 0 90px rgba(106, 17, 203, 0.35);
+    animation: cardIn 1.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     opacity: 0;
-    transform: translateY(60px) scale(0.95);
+    transform: translateY(70px) scale(0.95);
     overflow: hidden;
   }
 
@@ -58,30 +57,54 @@
     position: absolute;
     top: -50%; left: -50%;
     width: 200%; height: 200%;
-    background: conic-gradient(from 0deg, transparent, rgba(255,255,255,0.15), transparent 30%);
-    animation: shine 6s linear infinite;
+    background: conic-gradient(from 0deg, transparent, rgba(255,255,255,0.13), transparent 30%);
+    animation: shine 7s linear infinite;
     pointer-events: none;
   }
   @keyframes shine { to { transform: rotate(360deg); } }
 
   .card > * { position: relative; z-index: 2; }
 
+  /* ===== SAPAAN KELUARGA ===== */
+  .salam {
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #c4b5fd;
+    margin-bottom: 6px;
+    animation: fadeUp 1s 0.2s backwards;
+  }
+  .kepada {
+    font-size: 1rem;
+    font-style: italic;
+    color: #e9d5ff;
+    margin-bottom: 20px;
+    animation: fadeUp 1s 0.4s backwards;
+  }
+  .kepada strong {
+    color: #fff;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-shadow: 0 0 18px rgba(255,110,196,0.6);
+  }
+
   /* ===== FOTO ===== */
   .photo-wrap {
     width: 150px; height: 150px;
     margin: 0 auto 25px;
     position: relative;
-    animation: floatPhoto 4s ease-in-out infinite;
+    animation: floatPhoto 4.5s ease-in-out infinite;
   }
   @keyframes floatPhoto {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+    50% { transform: translateY(-11px); }
   }
   .photo-ring {
     position: absolute; inset: -6px;
     border-radius: 50%;
-    background: conic-gradient(#ff6ec4, #7873f5, #4ADEDE, #ff6ec4);
-    animation: spinRing 4s linear infinite;
+    background: conic-gradient(#ff6ec4, #7873f5, #4ADEDE, #ffd93d, #ff6ec4);
+    animation: spinRing 5s linear infinite;
     filter: blur(2px);
   }
   @keyframes spinRing { to { transform: rotate(360deg); } }
@@ -89,84 +112,88 @@
     position: absolute; inset: 0;
     border-radius: 50%;
     overflow: hidden;
-    border: 4px solid rgba(255,255,255,0.9);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    border: 4px solid rgba(255,255,255,0.95);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.45);
   }
   .photo img {
     width: 100%; height: 100%;
     object-fit: cover;
-    animation: photoZoom 8s ease-in-out infinite alternate;
+    animation: photoZoom 9s ease-in-out infinite alternate;
   }
   @keyframes photoZoom {
     from { transform: scale(1); }
-    to { transform: scale(1.12); }
+    to { transform: scale(1.13); }
   }
 
   /* ===== TEKS ===== */
-  .tagline {
-    font-size: 0.75rem;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: #a8b3ff;
-    margin-bottom: 10px;
-    animation: fadeUp 1s 0.3s backwards;
-  }
   .title {
-    font-size: 1.9rem;
+    font-size: 1.85rem;
     font-weight: 800;
-    line-height: 1.2;
-    background: linear-gradient(90deg, #ff6ec4, #7873f5, #4ADEDE, #ff6ec4);
+    line-height: 1.25;
+    background: linear-gradient(90deg, #ff6ec4, #7873f5, #4ADEDE, #ffd93d, #ff6ec4);
     background-size: 300% 100%;
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: textFlow 5s linear infinite, fadeUp 1s 0.5s backwards;
-    margin-bottom: 6px;
+    animation: textFlow 6s linear infinite, fadeUp 1s 0.6s backwards;
+    margin-bottom: 4px;
   }
   @keyframes textFlow { to { background-position: 300% 0; } }
 
+  .subtitle {
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.85);
+    margin-bottom: 4px;
+    animation: fadeUp 1s 0.8s backwards;
+  }
+
   .year {
-    font-size: 3.2rem;
+    font-size: 3.4rem;
     font-weight: 900;
-    letter-spacing: 6px;
-    color: rgba(255,255,255,0.95);
-    text-shadow: 0 0 25px rgba(120,115,245,0.9),
-                 0 0 50px rgba(255,110,196,0.6);
-    animation: glowPulse 2.5s ease-in-out infinite, fadeUp 1s 0.7s backwards;
+    letter-spacing: 8px;
+    color: rgba(255,255,255,0.97);
+    text-shadow: 0 0 28px rgba(120,115,245,0.95),
+                 0 0 55px rgba(255,110,196,0.65);
+    animation: glowPulse 2.6s ease-in-out infinite, fadeUp 1s 0.9s backwards;
   }
   @keyframes glowPulse {
-    0%, 100% { text-shadow: 0 0 25px rgba(120,115,245,0.9), 0 0 50px rgba(255,110,196,0.6); }
-    50% { text-shadow: 0 0 45px rgba(74,222,222,0.9), 0 0 80px rgba(255,110,196,0.9); }
+    0%, 100% { text-shadow: 0 0 28px rgba(120,115,245,0.95), 0 0 55px rgba(255,110,196,0.65); }
+    50% { text-shadow: 0 0 48px rgba(74,222,222,0.95), 0 0 85px rgba(255,110,196,0.95); }
   }
 
   .divider {
-    width: 60px; height: 3px;
-    margin: 18px auto;
+    width: 70px; height: 3px;
+    margin: 20px auto;
     border-radius: 3px;
-    background: linear-gradient(90deg, transparent, #4ADEDE, #ff6ec4, transparent);
-    animation: fadeUp 1s 0.9s backwards;
+    background: linear-gradient(90deg, transparent, #4ADEDE, #ff6ec4, #ffd93d, transparent);
+    animation: fadeUp 1s 1s backwards;
   }
 
   .name {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     font-weight: 700;
     color: #ffffff;
-    animation: fadeUp 1s 1.1s backwards;
+    text-shadow: 0 0 20px rgba(255,110,196,0.5);
+    animation: fadeUp 1s 1.15s backwards;
   }
   .nim {
     font-size: 0.85rem;
     color: #b8c0ff;
     letter-spacing: 2px;
-    margin-top: 4px;
-    animation: fadeUp 1s 1.2s backwards;
+    margin-top: 5px;
+    animation: fadeUp 1s 1.25s backwards;
   }
 
   .desc {
-    font-size: 0.9rem;
-    line-height: 1.7;
-    color: rgba(255,255,255,0.75);
-    margin: 20px 0;
-    animation: fadeUp 1s 1.3s backwards;
+    font-size: 0.92rem;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.82);
+    margin: 22px 0;
+    animation: fadeUp 1s 1.35s backwards;
+  }
+  .desc em {
+    color: #ffd6ef;
+    font-style: italic;
   }
 
   /* ===== DETAIL ACARA ===== */
@@ -182,19 +209,19 @@
     align-items: center;
     gap: 12px;
     background: rgba(255,255,255,0.07);
-    border: 1px solid rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.13);
     border-radius: 14px;
-    padding: 12px 16px;
+    padding: 13px 16px;
     text-align: left;
     transition: transform 0.3s, background 0.3s;
   }
   .detail-item:hover {
     transform: translateX(5px);
-    background: rgba(255,255,255,0.13);
+    background: rgba(255,255,255,0.14);
   }
   .detail-item .icon {
     font-size: 1.3rem;
-    animation: bounce 2s ease-in-out infinite;
+    animation: bounce 2.2s ease-in-out infinite;
   }
   .detail-item:nth-child(2) .icon { animation-delay: 0.3s; }
   .detail-item:nth-child(3) .icon { animation-delay: 0.6s; }
@@ -217,7 +244,7 @@
   /* ===== PETA ===== */
   .map-section {
     margin: 20px 0 10px;
-    animation: fadeUp 1s 1.6s backwards;
+    animation: fadeUp 1s 1.65s backwards;
   }
   .map-title {
     font-size: 0.75rem;
@@ -247,42 +274,40 @@
     height: 220px;
     border-radius: 18px;
     border: 1px solid rgba(255,255,255,0.25);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.45);
     overflow: hidden;
-    /* Leaflet default z-index terlalu tinggi, kita batasi */
     z-index: 1;
   }
 
-  /* Sembunyikan atribusi default agar rapi (opsional, tetap ada di tooltip) */
   .leaflet-control-attribution {
     font-size: 9px !important;
-    background: rgba(0,0,0,0.4) !important;
+    background: rgba(0,0,0,0.45) !important;
     color: #ccc !important;
   }
   .leaflet-control-attribution a { color: #9bb !important; }
 
-  /* Custom marker pin */
   .custom-pin {
     width: 26px; height: 26px;
     background: linear-gradient(135deg, #ff6ec4, #7873f5);
     border: 3px solid #fff;
     border-radius: 50% 50% 50% 0;
     transform: rotate(-45deg);
-    box-shadow: 0 0 15px rgba(255,110,196,0.8);
-    animation: pinPulse 1.5s ease-in-out infinite;
+    box-shadow: 0 0 15px rgba(255,110,196,0.85);
+    animation: pinPulse 1.6s ease-in-out infinite;
   }
   @keyframes pinPulse {
-    0%, 100% { box-shadow: 0 0 15px rgba(255,110,196,0.8); }
-    50% { box-shadow: 0 0 30px rgba(74,222,222,1); }
+    0%, 100% { box-shadow: 0 0 15px rgba(255,110,196,0.85); }
+    50% { box-shadow: 0 0 32px rgba(74,222,222,1); }
   }
 
   .map-actions {
     display: flex;
     gap: 10px;
     margin-top: 12px;
-    animation: fadeUp 1s 1.7s backwards;
+    animation: fadeUp 1s 1.75s backwards;
   }
-  .map-actions a {
+  .map-actions a,
+  .map-actions button {
     flex: 1;
     display: flex;
     align-items: center;
@@ -293,7 +318,10 @@
     font-weight: 600;
     border-radius: 12px;
     text-decoration: none;
+    border: none;
+    cursor: pointer;
     transition: all 0.3s;
+    font-family: inherit;
   }
   .btn-gmaps {
     color: #fff;
@@ -308,19 +336,31 @@
     color: #fff;
     background: linear-gradient(135deg, #ff6ec4, #7873f5);
     box-shadow: 0 6px 20px rgba(120,115,245,0.4);
-    border: none;
-    cursor: pointer;
   }
   .btn-zoom:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 28px rgba(255,110,196,0.6);
   }
 
+  /* ===== HARAPAN & DOA ===== */
+  .blessing {
+    margin: 22px 0 8px;
+    padding: 16px;
+    border-radius: 16px;
+    background: rgba(255, 215, 150, 0.08);
+    border: 1px dashed rgba(255, 215, 150, 0.35);
+    font-size: 0.85rem;
+    font-style: italic;
+    color: #ffe9c7;
+    line-height: 1.7;
+    animation: fadeUp 1s 1.85s backwards;
+  }
+
   /* ===== BUTTON UTAMA ===== */
   .btn {
     display: inline-block;
-    margin-top: 10px;
-    padding: 14px 38px;
+    margin-top: 14px;
+    padding: 15px 40px;
     border: none;
     border-radius: 50px;
     font-size: 0.95rem;
@@ -332,17 +372,36 @@
     background-size: 200% 100%;
     box-shadow: 0 10px 30px rgba(120,115,245,0.5);
     transition: all 0.3s ease;
-    animation: fadeUp 1s 1.9s backwards, btnGlow 3s ease-in-out infinite;
+    animation: fadeUp 1s 1.95s backwards, btnGlow 3s ease-in-out infinite;
     text-decoration: none;
   }
   .btn:hover {
     background-position: 100% 0;
     transform: translateY(-3px) scale(1.04);
-    box-shadow: 0 15px 40px rgba(255,110,196,0.7);
+    box-shadow: 0 15px 45px rgba(255,110,196,0.7);
   }
   @keyframes btnGlow {
     0%, 100% { box-shadow: 0 10px 30px rgba(120,115,245,0.5); }
-    50% { box-shadow: 0 10px 45px rgba(255,110,196,0.8); }
+    50% { box-shadow: 0 10px 48px rgba(255,110,196,0.85); }
+  }
+
+  .closing {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.6);
+    margin-top: 22px;
+    line-height: 1.6;
+    animation: fadeUp 1s 2.1s backwards;
+  }
+  .closing .heart {
+    display: inline-block;
+    color: #ff6ec4;
+    animation: beat 1.2s ease-in-out infinite;
+  }
+  @keyframes beat {
+    0%, 100% { transform: scale(1); }
+    25% { transform: scale(1.25); }
+    50% { transform: scale(1); }
+    75% { transform: scale(1.15); }
   }
 
   @keyframes fadeUp {
@@ -373,19 +432,20 @@
     z-index: 0;
     pointer-events: none;
   }
-  .orb1 { width: 300px; height: 300px; background: #6a11cb; top: -80px; left: -80px; animation: drift 12s ease-in-out infinite; }
-  .orb2 { width: 250px; height: 250px; background: #2575fc; bottom: -60px; right: -60px; animation: drift 15s ease-in-out infinite reverse; }
-  .orb3 { width: 200px; height: 200px; background: #ff6ec4; top: 40%; right: -100px; animation: drift 18s ease-in-out infinite; }
+  .orb1 { width: 320px; height: 320px; background: #6a11cb; top: -90px; left: -90px; animation: drift 13s ease-in-out infinite; }
+  .orb2 { width: 260px; height: 260px; background: #2575fc; bottom: -70px; right: -70px; animation: drift 16s ease-in-out infinite reverse; }
+  .orb3 { width: 210px; height: 210px; background: #ff6ec4; top: 40%; right: -110px; animation: drift 19s ease-in-out infinite; }
   @keyframes drift {
     0%, 100% { transform: translate(0, 0) scale(1); }
-    50% { transform: translate(40px, -40px) scale(1.2); }
+    50% { transform: translate(45px, -45px) scale(1.22); }
   }
 
   @media (max-width: 400px) {
     .title { font-size: 1.5rem; }
-    .year { font-size: 2.5rem; }
-    .card { padding: 30px 20px; }
+    .year { font-size: 2.6rem; letter-spacing: 6px; }
+    .card { padding: 32px 20px 30px; }
     #map { height: 190px; }
+    .name { font-size: 1.35rem; }
   }
 </style>
 </head>
@@ -396,25 +456,31 @@
 <div class="orb orb3"></div>
 
 <div class="card">
+
+  <!-- ===== SAPAAN DINAMIS DARI URL ===== -->
+  <p class="salam">Undangan Spesial</p>
+  <p class="kepada">Kepada Keluarga &amp; Saudara Tersayang<br><strong id="namaTamu">Keluarga Tercinta</strong></p>
+
   <div class="photo-wrap">
     <div class="photo-ring"></div>
     <div class="photo">
+      <!-- GANTI dengan foto Anda -->
       <img src="https://images.unsplash.com/photo-1627556704302-624286467c65?w=400&q=80" alt="Foto Wisudawan">
     </div>
   </div>
 
-  <p class="tagline">Undangan Wisuda</p>
-  <h1 class="title">Selamat Wisuda</h1>
-  <div class="year">2030</div>
+  <h1 class="title">Alhamdulillah,<br>Wisuda Telah Tiba</h1>
+  <p class="subtitle">Perayaan Kelulusan</p>
+  <div class="year">2026</div>
 
   <div class="divider"></div>
 
-  <h2 class="name">Nama Wisudawan</h2>
-  <p class="nim">NIM. 2030123456</p>
+  <h2 class="name">Mohidin Tuasikal</h2>
+  <p class="nim">NIM. 2030123456 — [Program Studi]</p>
 
   <p class="desc">
-    Dengan penuh rasa syukur dan bangga, kami mengundang Anda untuk hadir
-    dalam momen istimewa perayaan kelulusan kami.
+    Dengan penuh rasa syukur dan bahagia, saya mengundang <em>Bapak/Ibu/Saudara/Saudari</em> untuk hadir dan berbagi kebahagiaan dalam momen
+    istimewa perayaan kelulusan saya.
   </p>
 
   <div class="details">
@@ -422,7 +488,7 @@
       <span class="icon">📅</span>
       <div>
         <div class="label">Hari / Tanggal</div>
-        <div class="value">Sabtu, 15 Juni 2030</div>
+        <div class="value">Senin, 02 November 2026</div>
       </div>
     </div>
     <div class="detail-item">
@@ -436,7 +502,7 @@
       <span class="icon">📍</span>
       <div>
         <div class="label">Tempat</div>
-        <div class="value">Auditorium Universitas Nusantara</div>
+        <div class="value">Auditorium Universitas Pattimura</div>
       </div>
     </div>
   </div>
@@ -455,40 +521,73 @@
     </div>
   </div>
 
-  <a href="#" class="btn" onclick="alert('Terima kasih! Sampai jumpa di hari wisuda 🎓✨'); return false;">
+  <!-- ===== DOA & HARAPAN ===== -->
+  <div class="blessing">
+    “Kehadiran dan doa restu Bapak/Ibu/Saudara/Saudari merupakan kebahagiaan
+    yang tak ternilai bagi saya. Terima kasih atas segala dukungan yang telah
+    diberikan selama ini.” 🙏
+  </div>
+
+  <a href="#" class="btn" onclick="alert('Terima kasih banyak atas doa & dukungannya! Sampai jumpa di hari wisuda saya 🎓✨'); return false;">
     Konfirmasi Kehadiran
   </a>
+
+  <p class="closing">
+    Dengan cinta &amp; rasa syukur <span class="heart">❤</span><br>
+    Mohidin Tuasikal &amp; Keluarga
+  </p>
 </div>
 
-<!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script>
-  /* ====== KONFIGURASI LOKASI ======
-     Ganti latitude & longitude sesuai lokasi acara Anda.
-     Contoh di sini: Monas, Jakarta (-6.175392, 106.827153)
-  */
+  /* ============================================================
+     BAGIAN 1 — NAMA TAMU DINAMIS DARI URL
+     Contoh link yang dikirim:
+       undangan.html?kepada=Keluarga%20Bapak%20Ahmad
+       undangan.html?kepada=Keluarga%20Ibu%20Siti
+       undangan.html?kepada=Saudara%20Budi
+     Jika tidak ada parameter → tampil "Keluarga Tercinta"
+  ============================================================ */
+  (function setNamaTamu() {
+    const params = new URLSearchParams(window.location.search);
+    let kepada = params.get('kepada');
+
+    // Bersihkan input: trim & batasi panjang
+    if (kepada) {
+      kepada = kepada.trim().substring(0, 60);
+    }
+
+    const el = document.getElementById('namaTamu');
+    el.textContent = kepada && kepada.length > 0 ? kepada : 'Keluarga Tercinta';
+
+    // Update judul tab browser agar personal
+    if (kepada) {
+      document.title = 'Undangan Wisuda untuk ' + kepada + ' — 2026';
+    }
+  })();
+
+  /* ============================================================
+     BAGIAN 2 — PETA LOKASI
+  ============================================================ */
   const LOKASI = {
     lat: -6.175392,
     lng: 106.827153,
-    nama: "Auditorium Universitas Nusantara",
+    nama: "Auditorium Universitas Pattimura",
     alamat: "Jl. Contoh No. 123, Jakarta Pusat"
   };
 
-  // Inisialisasi peta
   const map = L.map('map', {
-    scrollWheelZoom: false,   // hindari zoom tak sengaja saat scroll halaman
+    scrollWheelZoom: false,
     zoomControl: true,
     attributionControl: true
   }).setView([LOKASI.lat, LOKASI.lng], 16);
 
-  // Tile layer OpenStreetMap (gratis)
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; OpenStreetMap'
   }).addTo(map);
 
-  // Marker custom (pin gradasi)
   const pinIcon = L.divIcon({
     className: '',
     html: '<div class="custom-pin"></div>',
@@ -507,22 +606,21 @@
      </a>`
   ).openPopup();
 
-  // Tombol Google Maps
   document.getElementById('gmapsLink').href =
     `https://www.google.com/maps/dir/?api=1&destination=${LOKASI.lat},${LOKASI.lng}`;
 
-  // Fungsi zoom ke lokasi
   function focusMap() {
     map.flyTo([LOKASI.lat, LOKASI.lng], 18, { duration: 1.2 });
     marker.openPopup();
   }
 
-  // Aktifkan scroll zoom hanya saat peta diklik
   map.on('click', () => map.scrollWheelZoom.enable());
   map.on('mouseout', () => map.scrollWheelZoom.disable());
 
-  /* ====== KONFETI ====== */
-  const colors = ['#ff6ec4', '#7873f5', '#4ADEDE', '#ffd93d', '#ffffff', '#ff8fab'];
+  /* ============================================================
+     BAGIAN 3 — KONFETI
+  ============================================================ */
+  const colors = ['#ff6ec4', '#7873f5', '#4ADEDE', '#ffd93d', '#ffffff', '#ff8fab', '#c4b5fd'];
   function createConfetti() {
     const c = document.createElement('div');
     c.classList.add('confetti');
@@ -537,9 +635,11 @@
     document.body.appendChild(c);
     setTimeout(() => c.remove(), (duration + 2) * 1000);
   }
-  setInterval(createConfetti, 250);
+  setInterval(createConfetti, 260);
 
-  /* ====== PARALLAX RINGAN (hanya desktop) ====== */
+  /* ============================================================
+     BAGIAN 4 — PARALLAX RINGAN (desktop)
+  ============================================================ */
   const card = document.querySelector('.card');
   if (window.matchMedia('(pointer: fine)').matches) {
     document.addEventListener('mousemove', (e) => {
