@@ -409,20 +409,6 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* ===== KONFETI ===== */
-  .confetti {
-    position: fixed;
-    top: -10px;
-    width: 10px; height: 10px;
-    opacity: 0.9;
-    z-index: 1;
-    pointer-events: none;
-    animation: fall linear infinite;
-  }
-  @keyframes fall {
-    to { transform: translateY(105vh) rotate(720deg); }
-  }
-
   /* Ornamen orb */
   .orb {
     position: fixed;
@@ -471,7 +457,7 @@
 
   <h1 class="title">Alhamdulillah,<br>Wisuda Telah Tiba</h1>
   <p class="subtitle">Perayaan Kelulusan</p>
- <h2 class="name">Mohidin Tuasikal S.AP</h2>
+  <h2 class="name">Mohidin Tuasikal S.AP</h2>
 
   <div class="divider"></div>
 
@@ -540,17 +526,11 @@
 <script>
   /* ============================================================
      BAGIAN 1 — NAMA TAMU DINAMIS DARI URL
-     Contoh link yang dikirim:
-       undangan.html?kepada=Keluarga%20Bapak%20Ahmad
-       undangan.html?kepada=Keluarga%20Ibu%20Siti
-       undangan.html?kepada=Saudara%20Budi
-     Jika tidak ada parameter → tampil "Keluarga Tercinta"
   ============================================================ */
   (function setNamaTamu() {
     const params = new URLSearchParams(window.location.search);
     let kepada = params.get('kepada');
 
-    // Bersihkan input: trim & batasi panjang
     if (kepada) {
       kepada = kepada.trim().substring(0, 60);
     }
@@ -558,7 +538,6 @@
     const el = document.getElementById('namaTamu');
     el.textContent = kepada && kepada.length > 0 ? kepada : 'Keluarga Tercinta';
 
-    // Update judul tab browser agar personal
     if (kepada) {
       document.title = 'Undangan Wisuda untuk ' + kepada + ' — 2026';
     }
@@ -568,8 +547,8 @@
      BAGIAN 2 — PETA LOKASI
   ============================================================ */
   const LOKASI = {
-   lat: -3.6276888842458113, 
-   lng: 128.23025466925225,
+    lat: -3.6276888842458113,
+    lng: 128.23025466925225,
     nama: "Cafe Papaceda Nania",
     alamat: "Jl. Laksdya Leo Wattimena"
   };
@@ -613,26 +592,6 @@
 
   map.on('click', () => map.scrollWheelZoom.enable());
   map.on('mouseout', () => map.scrollWheelZoom.disable());
-
-  /* ============================================================
-     BAGIAN 3 — KONFETI
-  ============================================================ */
-  const colors = ['#ff6ec4', '#7873f5', '#4ADEDE', '#ffd93d', '#ffffff', '#ff8fab', '#c4b5fd'];
-  function createConfetti() {
-    const c = document.createElement('div');
-    c.classList.add('confetti');
-    c.style.left = Math.random() * 100 + 'vw';
-    c.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-    c.style.width = (Math.random() * 8 + 6) + 'px';
-    c.style.height = (Math.random() * 8 + 6) + 'px';
-    c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
-    const duration = Math.random() * 3 + 4;
-    c.style.animationDuration = duration + 's';
-    c.style.animationDelay = Math.random() * 2 + 's';
-    document.body.appendChild(c);
-    setTimeout(() => c.remove(), (duration + 2) * 1000);
-  }
-  setInterval(createConfetti, 260);
 
   /* ============================================================
      BAGIAN 4 — PARALLAX RINGAN (desktop)
